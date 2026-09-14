@@ -26,36 +26,48 @@ export const MovieCard = memo(function MovieCard({
   const genre = movie.genres[0]?.name;
 
   return (
-    <article className={cn('group relative', className)}>
-      {/* The poster frame is fixed; only the image inside it scales on hover. */}
-      <div className="relative overflow-hidden rounded-card border border-hairline bg-surface">
+    <article
+      className={cn(
+        'group relative flex h-full flex-col overflow-hidden rounded-card border border-hairline bg-surface/80 shadow-[0_12px_32px_rgba(0,0,0,0.32)] transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_22px_50px_rgba(227,20,60,0.18)]',
+        className,
+      )}
+    >
+      <div className="relative overflow-hidden">
         <Link
           to={`/movies/${movie.id}`}
-          className="block aspect-2/3 focus-visible:outline-none"
+          className="relative block aspect-2/3 overflow-hidden focus-visible:outline-none"
           aria-label={`${movie.title}${year ? `, ${year}` : ''}`}
         >
           <PosterImage
             path={movie.posterPath}
             title={movie.title}
             priority={priority}
-            className="size-full object-cover transition-transform duration-300 group-hover:scale-105 group-focus-within:scale-105"
+            className="size-full object-cover transition-transform duration-400 group-hover:scale-[1.06] group-focus-within:scale-[1.06]"
           />
-          <span className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-screen/90 to-transparent" />
-          <span className="absolute bottom-2.5 left-2.5">
-            <Rating value={movie.rating} />
-          </span>
+          <div className="absolute inset-0 bg-linear-to-t from-screen via-screen/20 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-3">
+            <span className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-black/30 px-2 py-1 backdrop-blur-sm">
+              <Rating value={movie.rating} />
+            </span>
+            <span className="inline-flex size-8 items-center justify-center rounded-full border border-white/10 bg-black/35 text-xs text-chalk shadow-lg backdrop-blur-sm">
+              ▶
+            </span>
+          </div>
         </Link>
 
-        <FavoriteButton movie={movie} className="absolute right-2 top-2" />
+        <FavoriteButton
+          movie={movie}
+          className="absolute right-3 top-3 z-10 border border-white/10 bg-black/40 text-chalk shadow-lg backdrop-blur-sm hover:bg-black/55"
+        />
       </div>
 
-      <div className="mt-2.5 space-y-0.5">
-        <h3 className="truncate text-sm font-semibold leading-tight">
-          <Link to={`/movies/${movie.id}`} className="hover:text-accent-soft">
+      <div className="flex flex-1 flex-col gap-2 px-3 pb-3 pt-3">
+        <h3 className="line-clamp-2 text-base font-semibold leading-tight tracking-[-0.02em] text-chalk">
+          <Link to={`/movies/${movie.id}`} className="transition-colors hover:text-accent-soft">
             {movie.title}
           </Link>
         </h3>
-        <p className="truncate text-xs text-muted">
+        <p className="mt-auto text-xs font-medium uppercase tracking-[0.14em] text-muted/90">
           {[year, genre].filter(Boolean).join(' · ') || 'Details unavailable'}
         </p>
       </div>

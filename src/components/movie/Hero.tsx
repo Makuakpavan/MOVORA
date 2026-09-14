@@ -46,12 +46,14 @@ export function Hero({ movie, isLoading }: HeroProps) {
       />
 
       <div className="mx-auto w-full max-w-7xl px-4 pb-12 pt-28 sm:px-6 sm:pb-16 lg:px-8">
-        <div className="max-w-2xl space-y-4">
-          <p className="text-sm font-medium text-accent-soft">Featured today</p>
+        <div className="max-w-2xl space-y-5 rounded-[2rem] border border-white/10 bg-black/10 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-[2px] sm:p-6">
+          <p className="text-sm font-medium uppercase tracking-[0.22em] text-accent-soft">
+            Featured today
+          </p>
 
           <h1
             id="hero-title"
-            className="text-4xl leading-[1.05] sm:text-5xl lg:text-6xl"
+            className="max-w-xl text-4xl leading-[1.02] tracking-[-0.05em] text-chalk drop-shadow-[0_10px_32px_rgba(0,0,0,0.7)] sm:text-5xl lg:text-6xl"
           >
             {movie.title}
           </h1>
@@ -81,19 +83,19 @@ export function Hero({ movie, isLoading }: HeroProps) {
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <Link
               to={`/movies/${movie.id}`}
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-accent px-6 text-sm font-medium text-chalk transition-colors hover:bg-accent-soft"
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-accent px-6 text-sm font-medium text-chalk shadow-[0_12px_30px_rgba(227,20,60,0.45)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-accent-soft"
             >
               <Play aria-hidden className="size-4" fill="currentColor" />
               Watch trailer
             </Link>
             <Link
               to={`/movies/${movie.id}`}
-              className="inline-flex h-11 items-center gap-2 rounded-full border border-hairline bg-raised/80 px-6 text-sm font-medium text-chalk backdrop-blur-sm transition-colors hover:bg-hairline"
+              className="inline-flex h-11 items-center gap-2 rounded-full border border-white/10 bg-raised/70 px-6 text-sm font-medium text-chalk backdrop-blur-sm transition-colors hover:border-white/20 hover:bg-white/5"
             >
               <Info aria-hidden className="size-4" />
               More details
             </Link>
-            <FavoriteButton movie={movie} className="size-11 bg-raised/80" />
+            <FavoriteButton movie={movie} className="size-11 border border-white/10 bg-raised/70 backdrop-blur-sm" />
           </div>
         </div>
       </div>
