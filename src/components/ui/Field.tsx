@@ -1,4 +1,5 @@
-import { forwardRef, useId, type InputHTMLAttributes, type ReactNode } from 'react';
+import { forwardRef, useId, useState, type InputHTMLAttributes, type ReactNode } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import { cn } from '@/utils/cn';
 
 export interface FieldProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -9,11 +10,14 @@ export interface FieldProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const Field = forwardRef<HTMLInputElement, FieldProps>(
-  ({ label, error, hint, icon, className, id, ...props }, ref) => {
+  ({ label, error, hint, icon, className, id, type, ...props }, ref) => {
     const generatedId = useId();
     const inputId = id ?? generatedId;
     const errorId = `${inputId}-error`;
     const hintId = `${inputId}-hint`;
+    const [visible, setVisible] = useState(false);
+    const isPassword = type === 'password';
+    const inputType = isPassword ? (visible ? 'text' : 'password') : (type as string | undefined);
 
     return (
       <div className="flex flex-col gap-1.5">
@@ -43,8 +47,20 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
               error ? 'border-accent' : 'border-hairline',
               className,
             )}
+            type={inputType}
             {...props}
           />
+
+          {isPassword && (
+            <button
+              type="button"
+              aria-label={visible ? 'Hide password' : 'Show password'}
+              onClick={() => setVisible((v) => !v)}
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted"
+            >
+              {visible ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
+            </button>
+          )}
         </div>
 
         {hint && !error && (

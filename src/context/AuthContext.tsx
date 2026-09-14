@@ -38,6 +38,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false;
 
+    // If no API base is configured, skip attempting to hit backend routes.
+    // This allows the frontend to run in environments without a connected API.
+    if (!import.meta.env.VITE_API_BASE_URL) {
+      setUser(null);
+      setIsLoading(false);
+      return;
+    }
+
     authApi
       .me()
       .then((restored) => {

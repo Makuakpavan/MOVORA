@@ -1,7 +1,14 @@
 import type { SortOption } from '@/types/movie';
 
-export const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5000/api';
+const _rawApiBase = import.meta.env.VITE_API_BASE_URL;
+export const API_BASE_URL = (() => {
+  if (!_rawApiBase) return 'http://localhost:5000/api';
+  // Ensure the configured base includes the `/api` path segment so calls
+  // like `apiClient.get('/auth/me')` resolve to `/api/auth/me` on hosted
+  // environments (Vercel etc.) where the frontend and API share a domain.
+  const trimmed = _rawApiBase.replace(/\/+$/g, '');
+  return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+})();
 
 export const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL ?? 'https://image.tmdb.org/t/p';
 
