@@ -1,0 +1,90 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   Design tokens. Tailwind v4 reads these and generates utilities for them,
+   so `bg-screen`, `text-accent`, `border-hairline` etc. all just work.
+--------------------------------------------------------------------------- */
+@theme {
+  --color-screen: #0a0a0b;
+  --color-surface: #141417;
+  --color-raised: #1e1e23;
+  --color-hairline: #2c2c33;
+  --color-chalk: #f2f0ec;
+  --color-muted: #9a9aa3;
+  --color-accent: #e3143c;
+  --color-accent-soft: #ff3355;
+  --color-star: #f5b544;
+
+  --font-display: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 0.875rem;
+  --radius-panel: 1.25rem;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-screen text-chalk font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 110;
+    letter-spacing: -0.015em;
+    font-weight: 700;
+  }
+
+  /* One consistent, always-visible focus ring across the whole app. */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent-soft;
+  }
+
+  ::selection {
+    @apply bg-accent text-chalk;
+  }
+
+  /* Respect the OS "reduce motion" setting. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Skip link: visible only when focused by keyboard. */
+  .skip-link {
+    @apply absolute left-4 top-4 z-50 -translate-y-24 rounded-lg bg-accent px-4 py-2
+           text-sm font-medium text-chalk transition-transform focus:translate-y-0;
+  }
+
+  .rail {
+    @apply flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-hairline) transparent;
+  }
+
+  .rail::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .rail::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-hairline;
+  }
+}
