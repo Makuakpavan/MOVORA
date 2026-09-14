@@ -12,6 +12,7 @@ import { Skeleton } from '@/components/ui/Skeleton';
 import { ErrorState } from '@/components/ui/ErrorState';
 import { StateMessage } from '@/components/ui/StateMessage';
 import { useTmdbMovie, useTmdbSimilar } from '@/hooks/useTmdbMovie';
+import TrailerPlayer from '@/components/movie/TrailerPlayer';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 import {
   compactNumber,
@@ -247,15 +248,19 @@ export default function MovieDetailsPage() {
         )}
         {isModalOpen && movie.trailerUrl && (
           <Modal onClose={() => setIsModalOpen(false)}>
-            <div style={{ position: 'relative', paddingTop: '56.25%' }}>
-              <iframe
-                src={`${movie.trailerUrl}&autoplay=1`}
-                title={`${movie.title} trailer`}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-              />
+            <div>
+              {/* Trailer player with volume controls */}
+              <div style={{ position: 'relative', paddingTop: '56.25%' }}>
+                {/* Poster placeholder is handled by TrailerPlayer internally */}
+                {/* Player injected below */}
+                <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+                  <div className="h-full w-full">
+                    {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                    {/* @ts-ignore */}
+                    <TrailerPlayer embedUrl={movie.trailerUrl} />
+                  </div>
+                </div>
+              </div>
             </div>
           </Modal>
         )}
