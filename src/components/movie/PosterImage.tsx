@@ -3,6 +3,8 @@ import { ImageOff } from 'lucide-react';
 import { imageUrl } from '@/utils/images';
 import { cn } from '@/utils/cn';
 
+
+
 interface PosterImageProps {
   path: string | null;
   title: string;

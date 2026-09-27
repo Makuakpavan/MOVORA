@@ -10,7 +10,6 @@ export const API_BASE_URL = (() => {
   return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
 })();
 
-// const API_BASE_URL = 'https://api.themoviedb.org/3';
 
 export const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL ?? 'https://image.tmdb.org/t/p';
 
